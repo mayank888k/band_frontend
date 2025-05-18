@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Admin User</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2563eb;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        .message {
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #dcfce7;
+            border: 1px solid #86efac;
+            color: #166534;
+        }
+        .error {
+            background-color: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create Admin User</h1>
+    <p>Use this form to create your first admin user for the wedding band booking system.</p>
+
+    <div id="message" style="display: none;"></div>
+
+    <form id="adminForm">
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" value="Super Admin" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="admin@example.com" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="mobileNumber">Mobile Number</label>
+            <input type="text" id="mobileNumber" name="mobileNumber" value="1234567890" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="admin" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" value="admin123" required>
+        </div>
+        
+        <button type="submit">Create Admin User</button>
+    </form>
+
+    <script>
+        document.getElementById('adminForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const messageElement = document.getElementById('message');
+            messageElement.style.display = 'none';
+            
+            // Get form data
+            const adminData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                mobileNumber: document.getElementById('mobileNumber').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            };
+            
+            try {
+                // Send data to API
+                const response = await fetch('http://localhost:8081/api/admin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(adminData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageElement.className = 'message success';
+                    messageElement.innerHTML = `
+                        <strong>Success!</strong> Admin user created successfully.<br>
+                        Username: ${adminData.username}<br>
+                        Password: ${adminData.password}<br><br>
+                        <a href="http://localhost:3000/admin">Go to admin login</a>
+                    `;
+                } else {
+                    messageElement.className = 'message error';
+                    messageElement.innerHTML = `<strong>Error:</strong> ${data.error || 'Failed to create admin user'}`;
+                }
+            } catch (error) {
+                messageElement.className = 'message error';
+                messageElement.innerHTML = `
+                    <strong>Error:</strong> ${error.message}<br>
+                    Make sure your backend server is running at http://localhost:8081
+                `;
+            }
+            
+            messageElement.style.display = 'block';
+        });
+    </script>
+</body>
+</html> 
