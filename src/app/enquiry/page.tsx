@@ -67,7 +67,7 @@ function EnquiryForm() {
   
   // Get the initial package type from URL params before form initialization
   const getInitialPackageType = (): PackageType | undefined => {
-    const packageParam = searchParams.get("package");
+    const packageParam = searchParams?.get("package");
     
     if (packageParam) {
       const packageMapping: Record<string, PackageType> = {
