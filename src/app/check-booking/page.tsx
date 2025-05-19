@@ -39,6 +39,7 @@ type PhoneFormValues = z.infer<typeof phoneSchema>;
 
 type BookingInfo = {
   id: string;
+  bookingId: string;
   name: string;
   email: string;
   phone: string;
@@ -125,9 +126,9 @@ export default function CheckBookingPage() {
   };
 
   const renderBookingDetails = (booking: BookingInfo) => (
-    <Card key={booking.id} className="mb-6 shadow-md">
+    <Card key={booking.bookingId || booking.id} className="mb-6 shadow-md">
       <CardHeader className="bg-[#124E66] text-white">
-        <CardTitle>Booking #{booking.id.substring(0, 8)}</CardTitle>
+        <CardTitle>Booking #{booking.bookingId?.substring(0, 8) || booking.id.substring(0, 8)}</CardTitle>
         <CardDescription className="text-white/80">
           Created on {formatDate(booking.createdAt)}
         </CardDescription>

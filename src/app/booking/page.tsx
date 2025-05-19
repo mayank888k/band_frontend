@@ -1342,7 +1342,7 @@ export default function BookingPage() {
               <div className="space-y-6">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
                   <h3 className="font-bold text-lg text-green-700 mb-1">Your Booking ID</h3>
-                  <p className="text-2xl font-mono font-bold tracking-wider">{bookingDetails.id}</p>
+                  <p className="text-2xl font-mono font-bold tracking-wider">{bookingDetails.bookingId || bookingDetails.id}</p>
                   <p className="text-sm text-green-600 mt-2">Please save this ID for future reference</p>
                 </div>
                 

@@ -46,6 +46,7 @@ import autoTable from 'jspdf-autotable';
 
 interface Booking {
   id: string;
+  bookingId: string;
   name: string;
   email: string;
   phone: string;
@@ -82,7 +83,8 @@ function isBooking(obj: any): obj is Booking {
   return (
     obj &&
     typeof obj === 'object' &&
-    'id' in obj &&
+    // Must have either id or bookingId or both
+    (('id' in obj) || ('bookingId' in obj)) &&
     'name' in obj &&
     'email' in obj &&
     'phone' in obj &&
@@ -414,11 +416,11 @@ export default function BookingsPage() {
     
     try {
       setIsDeleting(true);
-      console.log("Deleting booking with ID:", selectedBooking.id);
+      console.log("Deleting booking with ID:", selectedBooking.bookingId || selectedBooking.id);
       
       try {
-        // Make sure we're using the exact ID from the database
-        const bookingId = String(selectedBooking.id).trim();
+        // Make sure we're using the exact ID from the database, prioritizing bookingId
+        const bookingId = String(selectedBooking.bookingId || selectedBooking.id).trim();
         console.log("Cleaned booking ID for deletion:", bookingId);
         
         const result = await deleteBooking(bookingId);
@@ -485,8 +487,8 @@ export default function BookingsPage() {
       applyFilters();
       
       // Show success message with count
-      const deletedCount = response && typeof response === 'object' && 'deleted_count' in response
-        ? response.deleted_count
+      const deletedCount = response && typeof response === 'object' && 'count' in response
+        ? response.count
         : 'Unknown number of';
       
       setSuccessMessage(`${deletedCount} past booking(s) deleted successfully`);
@@ -731,7 +733,7 @@ export default function BookingsPage() {
                     {booking.packageType}
                   </Badge>
                 </CardTitle>
-                <CardDescription>Booking ID: {booking.id}</CardDescription>
+                <CardDescription>Booking ID: {booking.bookingId || booking.id}</CardDescription>
               </CardHeader>
               <CardContent className="pt-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -787,8 +789,8 @@ export default function BookingsPage() {
                   </Badge>
                 </DialogTitle>
                 <DialogDescription>
-                  Booking ID: {selectedBooking.id}
-                  {selectedBooking.createdAt && (
+                  Booking ID: {selectedBooking?.bookingId || selectedBooking?.id}
+                  {selectedBooking?.createdAt && (
                     <span className="ml-4">Created: {formatDate(selectedBooking.createdAt)}</span>
                   )}
                 </DialogDescription>

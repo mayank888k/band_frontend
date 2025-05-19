@@ -154,10 +154,10 @@ export const deletePastBookings = async () => {
  * @param {Object} credentials - Login credentials
  * @param {string} credentials.username - Admin username
  * @param {string} credentials.password - Admin password
- * @returns {Promise<{token: string, user: Object}>}
+ * @returns {Promise<{admin: Object}>}
  */
 export const adminLogin = async (credentials) => {
-  return apiRequest('/login', {
+  return apiRequest('/signin', {
     method: 'POST',
     body: credentials,
   });

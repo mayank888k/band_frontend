@@ -21,17 +21,14 @@ import { adminLogin } from "@/lib/api";
 
 // Define admin login response type
 interface AdminLoginResponse {
-  // The API might return different structures based on the backend implementation
-  // This is a more flexible structure that handles various response formats
-  token?: string;
-  username?: string;
-  isAdmin?: boolean;
-  user?: {
-    username?: string;
+  admin: {
+    id: string;
+    name: string;
+    email: string;
+    mobileNumber: string;
+    username: string;
     isAdmin?: boolean;
-    [key: string]: any;
   };
-  [key: string]: any; // Allow for other properties
 }
 
 // Form schema with validation
@@ -68,24 +65,18 @@ export default function AdminLoginPage() {
 
       console.log("Login result:", result); // Debug the actual response
 
-      // Extract admin status and username based on response structure
-      const isAdmin = result.isAdmin || (result.user && result.user.isAdmin);
-      const username = result.username || (result.user && result.user.username);
-
-      // Check if user is admin
-      if (!isAdmin) {
-        setError("You don't have permission to access the admin panel");
-        return;
-      }
-
-      if (!username) {
+      // Check if we got a valid admin object in the response
+      if (!result.admin || !result.admin.username) {
         setError("Invalid response from server");
         return;
       }
 
-      // Store admin token and redirect to dashboard
+      // Store admin info in local storage
       localStorage.setItem("adminToken", JSON.stringify({
-        username: username,
+        username: result.admin.username,
+        name: result.admin.name,
+        email: result.admin.email,
+        id: result.admin.id,
         isAdmin: true,
       }));
 

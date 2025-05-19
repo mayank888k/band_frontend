@@ -44,7 +44,7 @@ import React from "react";
 
 // Define type for Employee
 interface Employee {
-  id: number;
+  id: string;
   name: string;
   username: string;
   email: string;
@@ -61,10 +61,10 @@ interface Employee {
 
 // Define type for Payment
 interface Payment {
-  id: number;
+  id: string;
   amountPaid: number;
   date: string;
-  employeeId: number;
+  employeeId: string;
   createdAt?: string;
 }
 
@@ -83,7 +83,7 @@ export default function EmployeesPage() {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeletePaymentDialogOpen, setIsDeletePaymentDialogOpen] = useState(false);
-  const [selectedPaymentId, setSelectedPaymentId] = useState<number | null>(null);
+  const [selectedPaymentId, setSelectedPaymentId] = useState<string | null>(null);
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -170,7 +170,9 @@ export default function EmployeesPage() {
       setErrorMessage("");
       const token = getAuthToken();
       const data = await getEmployeeDetails(employee.username, token);
-      setSelectedEmployee(data.employee as unknown as Employee);
+      
+      // The response is the employee object directly
+      setSelectedEmployee(data as unknown as Employee);
       setIsDetailsOpen(true);
     } catch (error) {
       console.error('Error fetching employee details:', error);
@@ -222,11 +224,11 @@ export default function EmployeesPage() {
         date: format(values.date, 'yyyy-MM-dd')
       };
       
-      const response = await addPayment(selectedEmployee.username, paymentData, token);
+      await addPayment(selectedEmployee.username, paymentData, token);
       
       // Refresh employee details to include the new payment
       const updatedData = await getEmployeeDetails(selectedEmployee.username, token);
-      setSelectedEmployee(updatedData.employee as unknown as Employee);
+      setSelectedEmployee(updatedData as unknown as Employee);
       
       // Reset form
       paymentForm.reset({
@@ -257,7 +259,7 @@ export default function EmployeesPage() {
       
       // Refresh employee details to update payments list
       const updatedData = await getEmployeeDetails(selectedEmployee.username, token);
-      setSelectedEmployee(updatedData.employee as unknown as Employee);
+      setSelectedEmployee(updatedData as unknown as Employee);
       
       // Close dialog
       setIsDeletePaymentDialogOpen(false);

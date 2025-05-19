@@ -47,10 +47,6 @@ interface Payment {
   createdAt?: string;
 }
 
-interface ApiResponse {
-  employee: Employee;
-}
-
 // Schema for the username search form
 const searchSchema = z.object({
   username: z.string().min(1, 'Username is required')
@@ -77,8 +73,8 @@ export default function EmployeePage() {
     setEmployee(null);
     
     try {
-      const response = await getEmployeeDetails(values.username) as ApiResponse;
-      setEmployee(response.employee);
+      const response = await getEmployeeDetails(values.username);
+      setEmployee(response as unknown as Employee);
     } catch (err: any) {
       setError(err.message || 'Error fetching employee details');
     } finally {

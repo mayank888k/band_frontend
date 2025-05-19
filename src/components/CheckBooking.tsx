@@ -29,6 +29,7 @@ type SectionContent = Record<string, string | number | boolean | null | undefine
 // Define booking response types
 interface BookingData {
   id: string;
+  bookingId: string;
   name: string;
   email: string;
   phone: string;
@@ -173,7 +174,7 @@ export function CheckBooking({ className }: CheckBookingProps) {
       pdf.setFont('courier', 'bold');
       pdf.setFontSize(16);
       pdf.setTextColor(0, 0, 0);
-      pdf.text(bookingDetails.id, margin + 35, yPos);
+      pdf.text(bookingDetails.bookingId || bookingDetails.id, margin + 35, yPos);
       
       // Add booking date
       yPos += 8;
@@ -360,7 +361,7 @@ export function CheckBooking({ className }: CheckBookingProps) {
       addFooter();
       
       // Save the PDF
-      pdf.save(`ModernBand_Booking_${bookingDetails.id}.pdf`);
+      pdf.save(`ModernBand_Booking_${bookingDetails.bookingId || bookingDetails.id}.pdf`);
       
       // Reset button state
       if (button) {
@@ -424,7 +425,7 @@ export function CheckBooking({ className }: CheckBookingProps) {
               {/* Booking ID Banner */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
                 <h3 className="font-bold text-lg text-green-700 mb-1">Booking ID</h3>
-                <p className="text-2xl font-mono font-bold tracking-wider">{bookingDetails.id}</p>
+                <p className="text-2xl font-mono font-bold tracking-wider">{bookingDetails.bookingId || bookingDetails.id}</p>
                 <p className="text-sm text-green-600 mt-2">Confirmed</p>
               </div>
               
