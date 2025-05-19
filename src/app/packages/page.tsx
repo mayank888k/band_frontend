@@ -122,9 +122,14 @@ export default function PackagesPage() {
                   <span className="text-3xl font-bold text-[hsl(var(--primary))]">₹30,000</span>
                   <span className="text-lg text-secondary/70">starting price</span>
                 </div>
-                <Link href="/booking?package=baraat" className="btn btn-lg btn-primary">
-                  Book This Package
-                </Link>
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/booking?package=baraat" className="btn btn-lg btn-primary">
+                    Book This Package
+                  </Link>
+                  <Link href="/enquiry?package=baraat" className="btn btn-lg bg-[#D3D9D4] text-[#2E3944] hover:bg-[#D3D9D4]/90">
+                    Enquire Price
+                  </Link>
+                </div>
               </div>
               <div className="order-1 md:order-2 rounded-lg h-70 overflow-hidden">
                 <OptimizedImage 
@@ -209,9 +214,14 @@ export default function PackagesPage() {
                   <span className="text-3xl font-bold text-[hsl(var(--primary))]">₹20,000</span>
                   <span className="text-lg text-secondary/70">starting price</span>
                 </div>
-                <Link href="/booking?package=djBand" className="btn btn-lg btn-primary">
-                  Book This Package
-                </Link>
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/booking?package=djBand" className="btn btn-lg btn-primary">
+                    Book This Package
+                  </Link>
+                  <Link href="/enquiry?package=djBand" className="btn btn-lg bg-[#D3D9D4] text-[#2E3944] hover:bg-[#D3D9D4]/90">
+                    Enquire Price
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -257,9 +267,14 @@ export default function PackagesPage() {
                   <span className="text-3xl font-bold text-[hsl(var(--primary))]">₹25,000</span>
                   <span className="text-lg text-secondary/70">starting price</span>
                 </div>
-                <Link href="/booking?package=reception" className="btn btn-lg btn-primary">
-                  Book This Package
-                </Link>
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/booking?package=reception" className="btn btn-lg btn-primary">
+                    Book This Package
+                  </Link>
+                  <Link href="/enquiry?package=reception" className="btn btn-lg bg-[#D3D9D4] text-[#2E3944] hover:bg-[#D3D9D4]/90">
+                    Enquire Price
+                  </Link>
+                </div>
               </div>
               <div className="order-1 md:order-2 rounded-lg h-70 overflow-hidden">
                 <OptimizedImage 
@@ -339,9 +354,14 @@ export default function PackagesPage() {
                   <span className="text-3xl font-bold text-[hsl(var(--primary))]">₹80,000</span>
                   <span className="text-lg text-secondary/70">starting price</span>
                 </div>
-                <Link href="/booking?package=fullWedding" className="btn btn-lg btn-primary">
-                  Book This Package
-                </Link>
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/booking?package=fullWedding" className="btn btn-lg btn-primary">
+                    Book This Package
+                  </Link>
+                  <Link href="/enquiry?package=fullWedding" className="btn btn-lg bg-[#D3D9D4] text-[#2E3944] hover:bg-[#D3D9D4]/90">
+                    Enquire Price
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

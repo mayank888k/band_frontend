@@ -22,6 +22,8 @@ export default function ContactPage() {
     message: false
   });
   
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -37,8 +39,43 @@ export default function ContactPage() {
   
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Form submission logic would go here
-    alert("Thank you for your message! We'll get back to you soon.");
+    
+    // Basic form validation
+    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+      alert("Please fill all required fields.");
+      return;
+    }
+    
+    // Format the data for WhatsApp
+    let message = `*New Contact Form Enquiry*\n\n`;
+    message += `*Name:* ${formData.name}\n`;
+    message += `*Email:* ${formData.email}\n`;
+    message += `*Phone:* ${formData.phone}\n`;
+    
+    if (formData.event_type) {
+      message += `*Event Type:* ${formData.event_type}\n`;
+    }
+    
+    message += `\n*Message:*\n${formData.message}`;
+    
+    // Encode the message for WhatsApp
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/919412308386?text=${encodedMessage}`; // Use the band's WhatsApp number
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
+    
+    // Show success message
+    setFormSubmitted(true);
+    
+    // Clear the form
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      event_type: "",
+      message: ""
+    });
   };
   
   const container = {

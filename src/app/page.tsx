@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import ServiceCard from "@/components/ServiceCard";
 import PublicPageWrapper from "@/components/PublicPageWrapper";
+import { checkHealth } from "@/lib/api";
 
 // Hero section animation variants with enhanced effects
 const containerVariants = {
@@ -84,6 +86,20 @@ const buttonVariants = {
 };
 
 export default function HomePage() {
+  // Check the health of the backend server when the home page loads
+  useEffect(() => {
+    const checkBackendHealth = async () => {
+      try {
+        const healthStatus = await checkHealth();
+        console.log("Backend server health:", healthStatus);
+      } catch (error) {
+        console.error("Error checking backend health:", error);
+      }
+    };
+    
+    checkBackendHealth();
+  }, []); // Empty dependency array ensures this runs only once when component mounts
+  
   return (
     <PublicPageWrapper>
       <div className="flex flex-col min-h-screen">
@@ -180,6 +196,11 @@ export default function HomePage() {
                     Watch Videos
                   </Link>
                 </motion.div>
+                <motion.div variants={buttonVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+                  <Link href="/enquiry" className="hero-btn bg-white text-[#124E66] hover:bg-white/90">
+                    Enquire Price
+                  </Link>
+                </motion.div>
               </motion.div>
             </motion.div>
           </div>
@@ -216,7 +237,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               <ServiceCard 
                 title="Baraat Procession"
-                description="An unforgettable groom’s procession featuring a royally decorated baggi, dazzling fancy lights, and best of the best musicians."
+                description="An unforgettable groom's procession featuring a royally decorated baggi, dazzling fancy lights, and best of the best musicians."
                 icon={
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-[hsl(var(--primary))]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
@@ -249,7 +270,7 @@ export default function HomePage() {
                 description="Traditional Band and DJ band services for Haldi, Mehendi and Sangeet ceremonies, enhancing the spiritual and cultural significance of every celebration."
                 icon={
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-[hsl(var(--primary))]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
                   </svg>
                 }
                 color="bg-[hsl(var(--primary)/0.1)]"

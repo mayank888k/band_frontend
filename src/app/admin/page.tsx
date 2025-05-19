@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Lock, UserCircle } from "lucide-react";
-import { adminLogin } from "@/lib/api";
+import { adminLogin, checkHealth } from "@/lib/api";
 
 // Define admin login response type
 interface AdminLoginResponse {
@@ -90,6 +90,20 @@ export default function AdminLoginPage() {
       setIsLoading(false);
     }
   };
+
+  // Check the health of the backend server when the home page loads
+  useEffect(() => {
+    const checkBackendHealth = async () => {
+      try {
+        const healthStatus = await checkHealth();
+        console.log("Backend server health:", healthStatus);
+      } catch (error) {
+        console.error("Error checking backend health:", error);
+      }
+    };
+    
+    checkBackendHealth();
+  }, []); // Empty dependency array ensures this runs only once when component mounts
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-900 to-gray-800 py-12 px-4 sm:px-6 lg:px-8">

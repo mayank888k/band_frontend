@@ -261,7 +261,7 @@ export const addPayment = async (username, paymentData, token) => {
 /**
  * Delete a payment for an employee
  * @param {string} username - Employee username
- * @param {string|number} paymentId - Payment ID
+ * @param {string} paymentId - Payment ID to delete
  * @param {string} [token] - Authentication token (if needed)
  * @returns {Promise<{message: string}>}
  */
@@ -272,6 +272,16 @@ export const deletePayment = async (username, paymentId, token) => {
     method: 'DELETE',
     headers,
   });
+};
+
+// ======= Health Check Endpoint =======
+
+/**
+ * Check the health of the backend server
+ * @returns {Promise<{status: string, timestamp: string}>}
+ */
+export const checkHealth = async () => {
+  return apiRequest('/health');
 };
 
 // Export a default API object that includes all endpoints
@@ -289,4 +299,5 @@ export default {
   deletePayment,
   deleteBooking,
   deletePastBookings,
+  checkHealth,
 }; 
