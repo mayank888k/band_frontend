@@ -163,7 +163,7 @@ function EnquiryForm() {
     
     // Encode the message for WhatsApp
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/9194123038386?text=${encodedMessage}`; // Replace with your actual WhatsApp number
+    const whatsappUrl = `https://wa.me/919412308386?text=${encodedMessage}`; // Replace with your actual WhatsApp number
     
     // Open WhatsApp in a new tab
     window.open(whatsappUrl, '_blank');
